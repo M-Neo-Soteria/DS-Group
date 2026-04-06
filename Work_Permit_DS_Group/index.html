@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Work Permit Form</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <style>
     /* =========================================
        CSS Variables & Reset (Mobile First)
@@ -33,12 +35,47 @@
         padding: 10px;
     }
 
+    /* Action Bar Styles - Placed outside the form so it isn't printed */
+    .action-bar {
+        max-width: 1500px;
+        margin: 0 auto 15px auto;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .action-bar select, .action-bar button {
+        padding: 8px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .action-bar button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        font-weight: bold;
+        transition: background-color 0.2s;
+    }
+
+    .action-bar button:hover {
+        background-color: #0056b3;
+    }
+
     .form-wrapper {
         background-color: #fff;
         max-width: 1500px;
         margin: 0 auto;
         padding: 20px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease;
     }
 
     /* =========================================
@@ -111,7 +148,7 @@
         margin-bottom: var(--spacing); 
     }
     .logo-img {
-        max-width: 90px; /* Adjust based on your actual logo size */
+        max-width: 90px;
         height: auto;
         display: block;
     }
@@ -142,7 +179,7 @@
        ========================================= */
     .grid-container {
         display: flex;
-        flex-direction: column; /* Mobile stack */
+        flex-direction: column;
         gap: var(--spacing);
     }
 
@@ -152,7 +189,6 @@
         flex-direction: column;
     }
 
-    /* Responsive Table Wrapper */
     .table-responsive {
         width: 100%;
         overflow-x: auto;
@@ -162,7 +198,7 @@
 
     table {
         width: 100%;
-        min-width: 500px; /* Prevents squishing on tiny screens */
+        min-width: 500px;
         border-collapse: collapse;
         table-layout: fixed;
     }
@@ -171,13 +207,11 @@
         padding: 4px 6px;
         vertical-align: top;
     }
-    .table-responsive table { border: none; } /* Remove double borders */
+    .table-responsive table { border: none; } 
 
-    /* Specific Table Adjustments */
     .nested-cell { padding: 0 !important; }
     .nested-cell-content { padding: 4px 6px; font-weight: bold; }
 
-    /* Completion Blocks Layout */
     .completion-grid {
         display: grid;
         grid-template-columns: 1fr;
@@ -205,7 +239,6 @@
         min-height: 200px;
     }
 
-    /* Note Box */
     .note-box {
         border: 2px dashed var(--border-color);
         padding: 10px;
@@ -248,7 +281,7 @@
         .col-left { width: 55%; }
         .col-right { width: 45%; }
         
-        table { min-width: auto; } /* Let tables naturally size on desktop */
+        table { min-width: auto; } 
         
         .completion-grid { grid-template-columns: 35% 65%; }
         .footer-row { flex-direction: row; justify-content: space-between; }
@@ -257,7 +290,17 @@
 </head>
 <body>
 
-<div class="form-wrapper">
+<div class="action-bar">
+    <label for="pdf-role" class="bold">Save Format For:</label>
+    <select id="pdf-role">
+        <option value="#ffffff">Issuing Authority (White Copy)</option>
+        <option value="#d4edda">Contractor (Green Copy)</option>
+        <option value="#f8d7da">Incharge FM / HRA (Pink Copy)</option>
+    </select>
+    <button onclick="exportToPDF()">Export to PDF</button>
+</div>
+
+<div class="form-wrapper" id="work-permit-form">
     
     <div class="header-section">
         <div class="logo-block">
@@ -682,6 +725,60 @@
     </div>
 
 </div>
+
+<script>
+    function prepareInputsForPrint() {
+        // Ensure values typed in inputs are explicitly set as attributes 
+        // so html2pdf can capture them seamlessly.
+        const textInputs = document.querySelectorAll('#work-permit-form input[type="text"]');
+        textInputs.forEach(input => {
+            input.setAttribute('value', input.value);
+        });
+
+        const textareas = document.querySelectorAll('#work-permit-form textarea');
+        textareas.forEach(textarea => {
+            textarea.innerHTML = textarea.value;
+        });
+
+        const checkboxes = document.querySelectorAll('#work-permit-form input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+            if (cb.checked) {
+                cb.setAttribute('checked', 'checked');
+            } else {
+                cb.removeAttribute('checked');
+            }
+        });
+    }
+
+    function exportToPDF() {
+        prepareInputsForPrint();
+
+        const formElement = document.getElementById('work-permit-form');
+        const roleDropdown = document.getElementById('pdf-role');
+        const selectedColor = roleDropdown.value;
+        const selectedText = roleDropdown.options[roleDropdown.selectedIndex].text.split('(')[0].trim();
+        
+        const originalBgColor = formElement.style.backgroundColor;
+
+        // Apply the selected background color
+        formElement.style.backgroundColor = selectedColor;
+
+        // Configure PDF options
+        const opt = {
+            margin:       [0.2, 0.2, 0.2, 0.2], // Top, Left, Bottom, Right
+            filename:     `Work_Permit_${selectedText.replace(/ /g, '_')}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: true }, // High resolution capturing
+            jsPDF:        { unit: 'in', format: 'a3', orientation: 'landscape' } // A3 format prevents standard cutoffs on wide tables
+        };
+
+        // Execute PDF Generation
+        html2pdf().set(opt).from(formElement).save().then(() => {
+            // Revert back to original white color once the download finishes
+            formElement.style.backgroundColor = originalBgColor || '#fff';
+        });
+    }
+</script>
 
 </body>
 </html>
