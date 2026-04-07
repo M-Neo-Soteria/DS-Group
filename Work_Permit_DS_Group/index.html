@@ -1,311 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Work Permit Form</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Permit Form</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-<style>
-    /* =========================================
-       CSS Variables & Reset (Mobile First)
-       ========================================= */
-    :root {
-        --border-color: #000;
-        --bg-gray: #e8e8e8;
-        --input-bg: #fafafa;
-        --input-focus: #eef7ff;
-        --text-sm: 11px;
-        --text-md: 13px;
-        --spacing: 15px;
-    }
+    <style>
+        /* =========================================
+           CSS Variables & Reset (Mobile First)
+           ========================================= */
+        :root {
+            --border-color: #000;
+            --bg-gray: #e8e8e8;
+            --input-bg: #fafafa;
+            --input-focus: #eef7ff;
+            --text-sm: 11px;
+            --text-md: 13px;
+            --spacing: 15px;
+        }
 
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    body {
-        font-family: Arial, sans-serif;
-        font-size: var(--text-sm);
-        background-color: #f0f0f0;
-        color: #000;
-        line-height: 1.3;
-        padding: 10px;
-    }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: var(--text-sm);
+            background-color: #f0f0f0;
+            color: #000;
+            line-height: 1.3;
+            padding: 10px;
+        }
 
-  /* Action Bar Styles - Placed outside the form so it isn't printed */
-.action-bar {
-    max-width: 1500px;
-    width: 100%; /* Ensures responsive scaling */
-    box-sizing: border-box; /* Keeps padding inside the container bounds */
-    margin: 0 auto 15px auto;
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    
-    /* Flexbox settings for centering and responsiveness */
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    justify-content: center; /* Centers the items */
-    flex-wrap: wrap; /* Allows items to wrap to the next line on small screens */
-}
+        /* Action Bar Styles */
+        .action-bar {
+            max-width: 1500px;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0 auto 15px auto;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
 
-.action-bar select, .action-bar button {
-    padding: 8px 12px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    cursor: pointer;
-}
+        .action-bar select, .action-bar button {
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-.action-bar button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
+        .action-bar button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
 
-.action-bar button:hover {
-    background-color: #0056b3;
-}
+        .action-bar button:hover {
+            background-color: #0056b3;
+        }
 
-/* Mobile Responsiveness for Buttons & Selects */
-@media (max-width: 600px) {
-    .action-bar {
-        padding: 10px;
-        gap: 10px;
-    }
-    
-    .action-bar select, .action-bar button {
-        flex: 1 1 auto; /* Allows buttons/selects to stretch and fill empty space */
-        min-width: 140px; /* Prevents them from getting too narrow to read */
-        text-align: center;
-    }
-}
+        @media (max-width: 600px) {
+            .action-bar select, .action-bar button {
+                flex: 1 1 auto;
+                min-width: 140px;
+                text-align: center;
+            }
+        }
 
-    .form-wrapper {
-        background-color: #fff;
-        max-width: 1500px;
-        margin: 0 auto;
-        padding: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        transition: background-color 0.3s ease;
-    }
+        .form-wrapper {
+            background-color: #fff;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
-    /* =========================================
-       Typography & Utility Classes
-       ========================================= */
-    .bold { font-weight: bold; }
-    .text-center { text-align: center; }
-    .text-right { text-align: right; }
-    .text-uppercase { text-transform: uppercase; }
-    .bg-gray { background-color: var(--bg-gray); }
-    .nowrap { white-space: nowrap; }
-    
-    .flex-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .flex-between { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; }
+        /* Typography & Utility */
+        .bold { font-weight: bold; }
+        .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-uppercase { text-transform: uppercase; }
+        .bg-gray { background-color: var(--bg-gray); }
+        .nowrap { white-space: nowrap; }
 
-    /* =========================================
-       Form Inputs
-       ========================================= */
-    input[type="text"] {
-        border: none;
-        border-bottom: 1px solid var(--border-color);
-        background: transparent;
-        font-family: inherit;
-        font-size: inherit;
-        padding: 2px 4px;
-        outline: none;
-        transition: background-color 0.2s;
-    }
-    input[type="text"]:focus, textarea:focus {
-        background-color: var(--input-focus);
-    }
-    
-    .input-full { width: 100%; border-bottom: none; background-color: var(--input-bg); padding: 4px; }
-    .input-full:focus { background-color: var(--input-focus); }
-    
-    .input-xs { width: 30px; text-align: center; }
-    .input-sm { width: 50px; text-align: center; }
-    .input-md { width: 100px; }
-    .input-lg { width: 100%; max-width: 200px; }
-    
-    textarea.input-full {
-        width: 100%;
-        min-height: 35px;
-        border: none;
-        resize: vertical;
-        font-family: inherit;
-        font-size: inherit;
-        padding: 5px;
-        background-color: var(--input-bg);
-        outline: none;
-        display: block;
-    }
+        .flex-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .flex-between { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; }
 
-    label {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        cursor: pointer;
-    }
-    input[type="checkbox"] { margin: 0; }
+        /* Form Inputs */
+        input[type="text"] {
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            background: transparent;
+            font-family: inherit;
+            font-size: inherit;
+            padding: 2px 4px;
+            outline: none;
+        }
+        input[type="text"]:focus, textarea:focus {
+            background-color: var(--input-focus);
+        }
 
-    /* =========================================
-       Header Styles
-       ========================================= */
-    .header-section { 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: var(--spacing); 
-    }
-    .logo-img {
-        max-width: 90px;
-        height: auto;
-        display: block;
-    }
-    .main-title { 
-        font-size: 24px; 
-        font-weight: bold; 
-        letter-spacing: 1px; 
-        text-align: center; 
-    }
-    .doc-meta { 
-        font-size: 10px; 
-        text-align: center; 
-    }
+        .input-full { width: 100%; border-bottom: none; background-color: var(--input-bg); padding: 4px; }
+        .input-xs { width: 30px; text-align: center; }
+        .input-sm { width: 50px; text-align: center; }
+        .input-md { width: 100px; }
+        .input-lg { width: 100%; max-width: 200px; }
 
-    .sub-header {
-        font-size: var(--text-md);
-        font-weight: bold;
-        margin-bottom: var(--spacing);
-        padding-bottom: 10px;
-        border-bottom: 2px solid var(--border-color);
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
+        textarea.input-full {
+            width: 100%;
+            min-height: 35px;
+            border: none;
+            resize: vertical;
+            font-family: inherit;
+            font-size: inherit;
+            padding: 5px;
+            background-color: var(--input-bg);
+            outline: none;
+            display: block;
+        }
 
-    /* =========================================
-       Tables & Grid Layout
-       ========================================= */
-    .grid-container {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing);
-    }
+        label { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
 
-    .col-left, .col-right {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .table-responsive {
-        width: 100%;
-        overflow-x: auto;
-        margin-bottom: var(--spacing);
-        border: 1px solid var(--border-color);
-    }
-
-    table {
-        width: 100%;
-        min-width: 500px;
-        border-collapse: collapse;
-        table-layout: fixed;
-    }
-    th, td {
-        border: 1px solid var(--border-color);
-        padding: 4px 6px;
-        vertical-align: top;
-    }
-    .table-responsive table { border: none; } 
-
-    .nested-cell { padding: 0 !important; }
-    .nested-cell-content { padding: 4px 6px; font-weight: bold; }
-
-    .completion-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
-        margin-bottom: var(--spacing);
-    }
-    .completion-box {
-        border: 1px solid var(--border-color);
-        display: flex;
-        flex-direction: column;
-    }
-    .completion-header {
-        background-color: var(--bg-gray);
-        font-weight: bold;
-        text-align: center;
-        padding: 6px;
-        border-bottom: 1px solid var(--border-color);
-    }
-    .completion-body {
-        padding: 10px;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 200px;
-    }
-
-    .note-box {
-        border: 2px dashed var(--border-color);
-        padding: 10px;
-        margin-bottom: var(--spacing);
-        background-color: #fffdf5;
-        margin-top: 12px;
-    }
-
-    .footer-row {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-        font-weight: bold;
-        font-size: 11px;
-        text-align: center;
-    }
-
-    /* =========================================
-       Desktop/Tablet Media Queries
-       ========================================= */
-    @media (min-width: 900px) {
+        /* Header Section */
         .header-section { 
-            flex-direction: row; 
-            justify-content: space-between; 
-            align-items: center; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: var(--spacing); 
         }
-        .main-title { margin-top: 0; }
-        .doc-meta { text-align: right; }
+        .logo-img {
+            max-height: 60px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+        .main-title { 
+            font-size: 24px; 
+            font-weight: bold; 
+            text-align: center; 
+        }
+        .doc-meta { 
+            font-size: 10px; 
+            text-align: center; 
+        }
 
-        .sub-header { 
-            flex-direction: row; 
-            justify-content: space-between; 
-            align-items: flex-end; 
+        .sub-header {
+            font-size: var(--text-md);
+            font-weight: bold;
+            margin-bottom: var(--spacing);
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-        
-        .grid-container { 
-            flex-direction: row; 
-            align-items: stretch; 
+
+        /* Tables & Grid */
+        .grid-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing);
         }
-        .col-left { width: 55%; }
-        .col-right { width: 45%; }
-        
-        table { min-width: auto; } 
-        
-        .completion-grid { grid-template-columns: 35% 65%; }
-        .footer-row { flex-direction: row; justify-content: space-between; }
-    }
-</style>
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: var(--spacing);
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            min-width: 500px;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 4px 6px;
+            vertical-align: top;
+        }
+        .table-responsive table { border: none; } 
+
+        .nested-cell { padding: 0 !important; }
+        .nested-cell-content { padding: 4px 6px; font-weight: bold; }
+
+        .completion-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: var(--spacing);
+        }
+        .completion-box {
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+        .completion-header {
+            background-color: var(--bg-gray);
+            font-weight: bold;
+            text-align: center;
+            padding: 6px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .completion-body {
+            padding: 10px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+        }
+
+        .note-box {
+            border: 2px dashed var(--border-color);
+            padding: 10px;
+            margin-bottom: var(--spacing);
+            background-color: #fffdf5;
+            margin-top: 12px;
+        }
+
+        .footer-row {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-weight: bold;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        @media (min-width: 900px) {
+            .header-section { 
+                flex-direction: row; 
+                justify-content: space-between; 
+            }
+            .main-title { flex: 1; }
+            .doc-meta { text-align: right; min-width: 120px; }
+
+            .sub-header { 
+                flex-direction: row; 
+                justify-content: space-between; 
+            }
+            .grid-container { flex-direction: row; }
+            .col-left { width: 55%; }
+            .col-right { width: 45%; }
+            .completion-grid { grid-template-columns: 35% 65%; }
+            .footer-row { flex-direction: row; justify-content: space-between; }
+        }
+    </style>
 </head>
 <body>
 
@@ -320,15 +276,20 @@
 </div>
 
 <div class="form-wrapper" id="work-permit-form">
-    
+
     <div class="header-section">
         <div class="logo-block">
-            <img src="logo.png" alt="DS GROUP Logo" class="logo-img">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTFogkbOvAAUBhiO2dxLNjB_L_XmoX2TnBsQ&s" alt="DS GROUP Logo" class="logo-img" crossorigin="anonymous">
         </div>
         <div class="main-title">WORK PERMIT</div>
+        <div class="logo-block">
+            <img src="https://media.licdn.com/dms/image/v2/C560BAQFsdFk43gclyg/company-logo_200_200/company-logo_200_200/0/1648617375867/tenon_fm_india_logo?e=2147483647&v=beta&t=Tqtx6aZIzsxyRAdPngUBbdWucesv2pR9LqeZaUdKcjg" alt="Tenon FM Logo" class="logo-img" crossorigin="anonymous">
+        </div>
         <div class="doc-meta">
-            DS(FDS)/ADM/FM/14<br>
-            Version 6.00<br>
+            DS(FDS)/ADM/FM/14
+
+            Version 6.00
+
             Effective Date: 06<sup>th</sup> April 2026
         </div>
     </div>
@@ -345,7 +306,7 @@
             <input type="text" class="input-sm" placeholder="YYYY">
         </div>
         <div class="flex-row" style="flex-grow: 1; justify-content: center;">
-            <span>Location of work:</span> <input type="text" class="input-lg" style="width: 100%;">
+            <span>Location of work:</span> <input type="text" style="width: 70%;">
         </div>
         <div class="flex-row" style="font-size: 16px;">
             <span>S. No.:</span> <input type="text" style="width: 120px; font-size: 16px; font-weight: bold; border-bottom: 2px solid var(--border-color);">
@@ -353,9 +314,8 @@
     </div>
 
     <div class="grid-container">
-        
+
         <div class="col-left">
-            
             <div class="table-responsive">
                 <table>
                     <tr>
@@ -435,7 +395,8 @@
                         <th colspan="4" class="bg-gray text-center">Contractor & Work Area details</th>
                     </tr>
                     <tr>
-                        <td width="20%" rowspan="3" style="vertical-align: middle;" class="bold">Contractor<br>Details</td>
+                        <td width="20%" rowspan="3" style="vertical-align: middle;" class="bold">Contractor
+Details</td>
                         <td width="30%">Company name</td>
                         <td colspan="2" width="50%" class="nested-cell"><input type="text" class="input-full" style="height: 100%;"></td>
                     </tr>
@@ -466,7 +427,7 @@
                         <td colspan="3" class="nested-cell"><input type="text" class="input-full" style="height: 100%;"></td>
                     </tr>
                     <tr>
-                        <td rowspan="2" style="vertical-align: middle;" class="bold">Work<br>Area<br>Details</td>
+                        <td rowspan="2" style="vertical-align: middle;" class="bold">Work Area Details</td>
                         <td class="bg-gray bold text-center">Department</td>
                         <td colspan="2" class="bg-gray bold text-center">Specify exact location</td>
                     </tr>
@@ -480,10 +441,10 @@
             <div class="table-responsive">
                 <table>
                     <tr>
-                        <th colspan="3" class="bg-gray text-center">To be checked by HRA (at Units) and Facility Management (at Corporate)</th>
+                        <th colspan="3" class="bg-gray text-center">To be checked by HRA and Facility Management</th>
                     </tr>
                     <tr>
-                        <td width="80%">• Copy of registration provided for Contract Labour (Regulation & abolition) Act 1970</td>
+                        <td width="80%">• Copy of registration provided for Contract Labour Act 1970</td>
                         <td width="10%"><label><input type="checkbox"> Yes</label></td>
                         <td width="10%"><label><input type="checkbox"> No</label></td>
                     </tr>
@@ -493,7 +454,7 @@
                         <td><label><input type="checkbox"> No</label></td>
                     </tr>
                     <tr>
-                        <td>• Copy of registration provided for Employees State Insurance (ESI) Act 1948</td>
+                        <td>• Copy of registration provided for ESI Act 1948</td>
                         <td><label><input type="checkbox"> Yes</label></td>
                         <td><label><input type="checkbox"> No</label></td>
                     </tr>
@@ -508,65 +469,34 @@
                     </tr>
                 </table>
             </div>
-
-            <div class="table-responsive" style="margin-bottom: 0;">
-                <table style="min-width: 100%;">
-                    <tr>
-                        <td width="55%">
-                            <div class="bold text-center text-uppercase" style="text-decoration: underline; margin-bottom: 8px;">Acceptance by CONTRACTOR</div>
-                            <p style="text-align: justify; margin-bottom: 15px; line-height: 1.2;">I understand the work which is to be carried out and the method of work to be used to ensure that it is carried out safely and abide by the all applicable Central, State, Municipal & Local laws, Bylaws, Rules & Regulations. No work will be carried out other than the work authorized by this permit.</p>
-                            <div class="flex-between bold">
-                                <div class="flex-row">Name: <input type="text" style="width: 60px;"></div>
-                                <div class="flex-row">Signature: <input type="text" style="width: 60px;"></div>
-                                <div class="flex-row">Date: <input type="text" style="width: 50px;"></div>
-                            </div>
-                        </td>
-                        <td width="45%">
-                            <div class="bold text-center" style="text-decoration: underline; margin-bottom: 12px;">Acceptance by person on report</div>
-                            <div class="flex-row" style="margin-bottom: 10px;">Name <input type="text" style="flex: 1;"></div>
-                            <div class="flex-row" style="margin-bottom: 10px;">Signature <input type="text" style="flex: 1;"></div>
-                            <div class="flex-row" style="margin-top: 30px;">Date <input type="text" style="flex: 1;"></div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
         </div>
 
         <div class="col-right">
-            
             <div class="table-responsive">
                 <table>
                     <tr class="bg-gray text-center bold">
                         <td rowspan="2" width="15%" style="background-color: #fff; border-top-color: transparent; border-left-color: transparent;"></td>
-                        <td rowspan="2" width="20%">Initiator<br><span style="font-weight: normal; font-size: 10px;">User Dept.</span></td>
+                        <td rowspan="2" width="20%">Initiator</td>
                         <td colspan="2" width="40%">Recommended</td>
-                        <td rowspan="2" width="25%">APPROVAL<br><span style="font-weight: normal; font-size: 10px;">HOD Facility<br>Management / Unit<br>Head</span></td>
+                        <td rowspan="2" width="25%">APPROVAL</td>
                     </tr>
                     <tr class="bg-gray text-center bold">
-                        <td>HOD User<br>Dept.</td>
-                        <td>EHS<br>Representative</td>
+                        <td>HOD User</td>
+                        <td>EHS Rep.</td>
                     </tr>
                     <tr>
                         <td class="bold">Name</td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
+                        <td class="nested-cell"><input type="text" class="input-full"></td>
+                        <td class="nested-cell"><input type="text" class="input-full"></td>
+                        <td class="nested-cell"><input type="text" class="input-full"></td>
+                        <td class="nested-cell"><input type="text" class="input-full"></td>
                     </tr>
                     <tr>
                         <td class="bold">Signature</td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
-                    </tr>
-                    <tr>
-                        <td class="bold">Date</td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 24px;"></td>
+                        <td class="nested-cell"><input type="text" class="input-full"></td>
+                        <td class="nested-cell"><input type="text" class="input-full"></td>
+                        <td class="nested-cell"><input type="text" class="input-full"></td>
+                        <td class="nested-cell"><input type="text" class="input-full"></td>
                     </tr>
                 </table>
             </div>
@@ -574,226 +504,89 @@
             <div class="table-responsive">
                 <table>
                     <tr>
-                        <td colspan="3" style="padding: 10px;">
-                            <div class="bold" style="margin-bottom: 10px;">Company employee responsible for the work:</div>
-                            <div class="flex-between text-center" style="align-items: flex-end;">
-                                <div><input type="text" class="input-md"><br>Name</div>
-                                <div><input type="text" class="input-md"><br>Designation</div>
-                                <div><input type="text" class="input-sm"><br>Dept.</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="3" class="bg-gray text-center">For confined space permit</th>
-                    </tr>
-                    <tr>
-                        <td width="30%" style="border-bottom: none;"></td>
-                        <td width="35%" class="text-center bold">Name</td>
-                        <td width="35%" class="text-center bold">Signature</td>
-                    </tr>
-                    <tr>
-                        <td class="bold">Entrant</td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 100%;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 100%;"></td>
-                    </tr>
-                    <tr>
-                        <td class="bold">Attendant</td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 100%;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 100%;"></td>
-                    </tr>
-                    <tr>
-                        <td class="bold">Supervisor</td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 100%;"></td>
-                        <td class="nested-cell"><input type="text" class="input-full" style="height: 100%;"></td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="table-responsive">
-                <table>
-                    <tr>
-                        <th colspan="3" class="bg-gray text-center">Precautionary measures recommended by<br>Incharge Security & Safety / Facility Management</th>
+                        <th colspan="3" class="bg-gray text-center">Precautionary measures (PPE Required)</th>
                     </tr>
                     <tr class="bg-gray bold">
                         <td width="55%">Items</td>
-                        <td width="25%" class="text-center">PPE Required (Pl. &#10003;)</td>
+                        <td width="25%" class="text-center">Required</td>
                         <td width="20%">Approved by</td>
                     </tr>
-                    <tr>
-                        <td>Full Body Harness</td>
-                        <td class="nowrap"><label><input type="checkbox"> Yes</label> &nbsp; <label><input type="checkbox"> No</label></td>
-                        <td rowspan="10" style="vertical-align: top; padding: 10px;">
-                            <div style="margin-bottom: 35px;">Name:<br><input type="text" style="width:100%;"></div>
-                            <div style="margin-bottom: 35px;">Signature:<br><input type="text" style="width:100%;"></div>
-                            <div>Date:<br><input type="text" style="width:100%;"></div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Ear Plug</td>
-                        <td class="nowrap"><label><input type="checkbox"> Yes</label> &nbsp; <label><input type="checkbox"> No</label></td>
-                    </tr>
-                    <tr>
-                        <td>Goggle / Face shield</td>
-                        <td class="nowrap"><label><input type="checkbox"> Yes</label> &nbsp; <label><input type="checkbox"> No</label></td>
-                    </tr>
-                    <tr>
-                        <td>Dust Mask</td>
-                        <td class="nowrap"><label><input type="checkbox"> Yes</label> &nbsp; <label><input type="checkbox"> No</label></td>
-                    </tr>
-                    <tr>
-                        <td>Hand Gloves <br><span style="font-size:9px; color:#555;">(Chemical/ Heat/ Cut resistant/ Cotton / Electrically insulated)</span></td>
-                        <td class="nowrap"><label><input type="checkbox"> Yes</label> &nbsp; <label><input type="checkbox"> No</label></td>
-                    </tr>
-                    <tr>
-                        <td>Apron & Leg Guard</td>
-                        <td class="nowrap"><label><input type="checkbox"> Yes</label> &nbsp; <label><input type="checkbox"> No</label></td>
-                    </tr>
-                    <tr>
-                        <td>Heat Resistant suit</td>
-                        <td class="nowrap"><label><input type="checkbox"> Yes</label> &nbsp; <label><input type="checkbox"> No</label></td>
-                    </tr>
-                    <tr>
-                        <td>Fitness Certificate</td>
-                        <td class="nowrap"><label><input type="checkbox"> Yes</label> &nbsp; <label><input type="checkbox"> No</label></td>
-                    </tr>
-                    <tr>
-                        <td style="border-bottom:none;" class="bold">Any other (Pl. specify)</td>
-                        <td style="border-bottom:none;"></td>
-                    </tr>
-                    <tr>
-                        <td style="border-top:none; padding-bottom: 10px;">
-                            <div class="flex-row">1. <input type="text" style="flex:1;"></div>
-                            <div class="flex-row" style="margin-top: 5px;">2. <input type="text" style="flex:1;"></div>
-                        </td>
-                        <td style="border-top:none; vertical-align: bottom; padding-bottom: 10px;">
-                            <div class="nowrap" style="margin-bottom: 5px;"><label><input type="checkbox"> Yes</label> &nbsp; <label><input type="checkbox"> No</label></div>
-                            <div class="nowrap"><label><input type="checkbox"> Yes</label> &nbsp; <label><input type="checkbox"> No</label></div>
-                        </td>
-                    </tr>
+                    <tr><td>Full Body Harness</td><td class="nowrap"><label><input type="checkbox"> Y</label> / <label><input type="checkbox"> N</label></td><td rowspan="5" class="v-top">Sign:</td></tr>
+                    <tr><td>Ear Plug</td><td class="nowrap"><label><input type="checkbox"> Y</label> / <label><input type="checkbox"> N</label></td></tr>
+                    <tr><td>Goggle / Face shield</td><td class="nowrap"><label><input type="checkbox"> Y</label> / <label><input type="checkbox"> N</label></td></tr>
+                    <tr><td>Dust Mask</td><td class="nowrap"><label><input type="checkbox"> Y</label> / <label><input type="checkbox"> N</label></td></tr>
+                    <tr><td>Hand Gloves</td><td class="nowrap"><label><input type="checkbox"> Y</label> / <label><input type="checkbox"> N</label></td></tr>
                 </table>
             </div>
 
             <div class="completion-grid">
-                
                 <div class="completion-box">
-                    <div class="completion-header text-uppercase">WORK PERMIT</div>
+                    <div class="completion-header">WORK PERMIT</div>
                     <div class="completion-body">
-                        <div>
-                            <div style="margin-bottom: 10px;">Copy issued to</div>
-                            <div class="flex-row">Contractor by: <input type="text" style="width: 80px;"></div>
-                        </div>
-                        <div>
-                            <input type="text" class="input-full" style="border-bottom: 1px solid var(--border-color); margin-bottom: 10px;">
-                            <div class="flex-row">Issued Date: <input type="text" class="input-sm"></div>
-                        </div>
+                        <div>Copy issued by: <input type="text" style="width: 100%;"></div>
+                        <div>Date: <input type="text" style="width: 100%;"></div>
                     </div>
                 </div>
-
                 <div class="completion-box">
-                    <div class="completion-header">
-                        COMPLETION VERIFICATION<br>
-                        <span style="font-size: 9px; font-weight: normal; text-decoration: underline;">Incharge Facility Management / Unit Head</span>
-                    </div>
+                    <div class="completion-header">COMPLETION VERIFICATION</div>
                     <div class="completion-body">
-                        <p style="text-align: justify; margin-bottom: 15px; line-height: 1.2;">The above work is completed. Manpower deployed is removed from the working site and site area is cleaned and restored in terms of safety.</p>
-                        
-                        <div class="flex-between bold text-center" style="margin-bottom: 20px;">
-                            <span style="flex: 1;">Name</span>
-                            <span style="flex: 1;">Signature</span>
-                            <span style="flex: 1;">Date</span>
-                        </div>
-                        
-                        <div class="flex-row flex-between" style="margin-bottom: 15px;">
-                            <span style="width: 80px;">Contractor:</span>
-                            <input type="text" style="flex: 1;">
-                        </div>
-                        
-                        <div class="flex-row flex-between" style="margin-bottom: 25px;">
-                            <span style="width: 80px; line-height: 1.2;">Company<br>employee<br>site incharge:</span>
-                            <input type="text" style="flex: 1;">
-                        </div>
-                        
-                        <div class="flex-between" style="align-items: flex-end;">
-                            <div style="width: 100px; text-align: center; border-top: 1px solid var(--border-color); padding-top: 2px;">Signature</div>
-                            <div class="flex-row">Person Issuing: <input type="text" class="input-sm"></div>
-                        </div>
+                        <p>Work is completed. Site is cleaned and restored.</p>
+                        <div class="flex-row">Contractor Sign: <input type="text" style="flex:1;"></div>
+                        <div class="flex-row">Site Incharge: <input type="text" style="flex:1;"></div>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 
     <div class="note-box">
-        <div style="display: flex; gap: 10px;">
-            <div class="bold" style="min-width: 45px;">NOTE:</div>
-            <div>
-                <ul style="margin: 0; padding-left: 15px; line-height: 1.4;">
-                    <li>This permit applies only to work in the location described.</li>
-                    <li>This permit only applies to the person to whom it is issued. If work has to be continued by someone else, this permit must be returned to issuer for cancellation and another permit issued.</li>
-                </ul>
-            </div>
-        </div>
+        <span class="bold">NOTE:</span>
+        <ul style="margin-left: 20px;">
+            <li>Permit applies only to work in the location described.</li>
+            <li>If work continues by someone else, a new permit must be issued.</li>
+        </ul>
     </div>
 
     <div class="footer-row">
-        <div style="color: #2e7d32;">Green Copy for Contractor</div>
-        <div style="color: #c2185b;">Pink Copy for Incharge Facility Management / Incharge HRA at Units</div>
-        <div style="color: #444;">White Copy for Issuing Authority</div>
+        <div style="color: #2e7d32;">Green Copy: Contractor</div>
+        <div style="color: #c2185b;">Pink Copy: FM / HRA</div>
+        <div style="color: #444;">White Copy: Issuing Authority</div>
     </div>
-
 </div>
 
 <script>
     function prepareInputsForPrint() {
-        // Ensure values typed in inputs are explicitly set as attributes 
-        // so html2pdf can capture them seamlessly.
         const textInputs = document.querySelectorAll('#work-permit-form input[type="text"]');
-        textInputs.forEach(input => {
-            input.setAttribute('value', input.value);
-        });
+        textInputs.forEach(input => input.setAttribute('value', input.value));
 
         const textareas = document.querySelectorAll('#work-permit-form textarea');
-        textareas.forEach(textarea => {
-            textarea.innerHTML = textarea.value;
-        });
+        textareas.forEach(textarea => textarea.innerHTML = textarea.value);
 
         const checkboxes = document.querySelectorAll('#work-permit-form input[type="checkbox"]');
         checkboxes.forEach(cb => {
-            if (cb.checked) {
-                cb.setAttribute('checked', 'checked');
-            } else {
-                cb.removeAttribute('checked');
-            }
+            cb.checked ? cb.setAttribute('checked', 'checked') : cb.removeAttribute('checked');
         });
     }
 
     function exportToPDF() {
         prepareInputsForPrint();
-
         const formElement = document.getElementById('work-permit-form');
         const roleDropdown = document.getElementById('pdf-role');
         const selectedColor = roleDropdown.value;
         const selectedText = roleDropdown.options[roleDropdown.selectedIndex].text.split('(')[0].trim();
-        
-        const originalBgColor = formElement.style.backgroundColor;
 
-        // Apply the selected background color
+        const originalBgColor = formElement.style.backgroundColor;
         formElement.style.backgroundColor = selectedColor;
 
-        // Configure PDF options
         const opt = {
-            margin:       [0.2, 0.2, 0.2, 0.2], // Top, Left, Bottom, Right
+            margin:       [0.2, 0.2, 0.2, 0.2],
             filename:     `Work_Permit_${selectedText.replace(/ /g, '_')}.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true }, // High resolution capturing
-            jsPDF:        { unit: 'in', format: 'a3', orientation: 'landscape' } // A3 format prevents standard cutoffs on wide tables
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'in', format: 'a3', orientation: 'landscape' }
         };
 
-        // Execute PDF Generation
         html2pdf().set(opt).from(formElement).save().then(() => {
-            // Revert back to original white color once the download finishes
             formElement.style.backgroundColor = originalBgColor || '#fff';
         });
     }
